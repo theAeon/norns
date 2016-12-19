@@ -76,9 +76,8 @@ class Config(DictMixin):
     def keys():
         return self.config.keys()
 
-
-def config(name):
-    return Config(name)
+def config(name=None, config_file=None):
+    return Config(name=name, config_file=config_file)
 
 if __name__ == "__main__":
     c = config("genomepy")

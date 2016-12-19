@@ -47,14 +47,14 @@ classifiers = [
 
 setup(
     name='norns',
-    version=genomepy.__version__,
+    version=norns.__version__,
     description='Simple yaml-based config module',
     long_description=long_description,
     packages=packages,
     package_data=package_data,
     scripts=scripts,
     install_requires=requires,
-    author=genomepy.__author__,
+    author=norns.__author__,
     author_email='simon.vanheeringen@gmail.com',
     url='https://github.com/simonvh/norns',
     license='MIT',
