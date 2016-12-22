@@ -1,7 +1,12 @@
 import os
 import xdg
 from yaml import load, dump
-from UserDict import DictMixin
+try:
+    from UserDict import DictMixin
+except ImportError:
+    from collections import MutableMapping as DictMixin
+import pkg_resources
+
 __version__ = '0.0.1'
 __author__ = "Simon van Heeringen"
 
@@ -15,7 +20,7 @@ class Config(DictMixin):
     # Store shared state, Borg pattern
     __shared_state = {}
     
-    def __init__(self, name=None, config_file=None):
+    def __init__(self, name=None, config_file=None, default=None):
         """ 
         Create a Config object and read a config file.
 
@@ -28,6 +33,9 @@ class Config(DictMixin):
 
         config_file : str, optional
             name of specific configration file
+        
+        default : str, optional
+            default config, relative to package directory
         """
 
         self.__dict__ = self.__shared_state
@@ -39,7 +47,11 @@ class Config(DictMixin):
                 )
         elif config_file: # Read specific file
             self.config_file = config_file
-        else:
+        
+        if not os.path.exists(self.config_file) and default:
+            self.config_file = pkg_resources.resource_filename(name, default)
+        
+        if not os.path.exists(self.config_file):
             raise ValueError("please provide name or config_file")
 
         self.config = {}
@@ -73,16 +85,17 @@ class Config(DictMixin):
     def __setitem__(self, key, value):
         return self.config.__setitem__(key, value)
 
-    def keys():
+    def __len__(self):
+        return self.config.__len__()
+
+    def __iter__(self):
+        return self.config.__iter__()
+    
+    def keys(self):
         return self.config.keys()
 
-def config(name=None, config_file=None):
-    return Config(name=name, config_file=config_file)
+def config(name=None, config_file=None, default=None):
+    return Config(name=name, config_file=config_file, default=default)
 
 if __name__ == "__main__":
-    c = config("genomepy")
-    print c.config_file
-    print c.get("genome_path")
-    c["genome_path"] = "~/genomes"
-    c["flop"] = [1,2,3]
-    c.save()
+    pass
