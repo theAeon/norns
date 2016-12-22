@@ -1,5 +1,6 @@
 import os
 import sys
+
 import norns
 
 try:
@@ -27,6 +28,9 @@ package_data = {
 }
 
 requires = [
+    'nose',
+    'xdg',
+    'pyyaml',
 ]
 
 scripts = [
