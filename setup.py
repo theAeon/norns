@@ -29,7 +29,7 @@ package_data = {
 
 requires = [
     'nose',
-    'xdg',
+    'appdirs',
     'pyyaml',
 ]
 

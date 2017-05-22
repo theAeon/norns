@@ -1,5 +1,5 @@
 import os
-import xdg
+from appdirs import user_config_dir
 from yaml import load, dump
 try:
     from UserDict import DictMixin
@@ -44,7 +44,7 @@ class Config(DictMixin):
         # Lookup the config file according to XDG hierarchy
         if name:
             self.config_file = os.path.join(
-                xdg.XDG_CONFIG_HOME, name, "{}.yaml".format(name)
+                    user_config_dir(name), "{}.yaml".format(name)
                 )
         elif config_file: # Read specific file
             self.config_file = config_file
