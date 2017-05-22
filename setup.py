@@ -1,12 +1,12 @@
 import os
 import sys
 
-import norns
-
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
+
+exec(open("norns/__about__.py").read())
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -29,7 +29,7 @@ package_data = {
 
 requires = [
     'nose',
-    'xdg',
+    'appdirs',
     'pyyaml',
 ]
 
@@ -51,14 +51,14 @@ classifiers = [
 
 setup(
     name='norns',
-    version=norns.__version__,
+    version=__version__,
     description='Simple yaml-based config module',
     long_description=long_description,
     packages=packages,
     package_data=package_data,
     scripts=scripts,
     install_requires=requires,
-    author=norns.__author__,
+    author=__author__,
     author_email='simon.vanheeringen@gmail.com',
     url='https://github.com/simonvh/norns',
     license='MIT',
