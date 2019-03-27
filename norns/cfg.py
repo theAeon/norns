@@ -1,6 +1,6 @@
 import os
 from appdirs import user_config_dir
-from yaml import load, dump
+from yaml import full_load, dump
 try:
     from UserDict import DictMixin
 except ImportError:
@@ -69,7 +69,7 @@ class Config(DictMixin):
             path to config file
         """
         with open(path) as f:
-            self.config = load(f)
+            self.config = full_load(f)
 
     def save(self):
         """ 
