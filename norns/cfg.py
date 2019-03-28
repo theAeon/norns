@@ -1,6 +1,6 @@
 import os
 from appdirs import user_config_dir
-from yaml import load, dump
+from yaml import full_load, dump
 try:
     from UserDict import DictMixin
 except ImportError:
@@ -13,9 +13,7 @@ class Config(DictMixin):
     """ Configuration class. 
 
     State will be shared across config objects. 
-
     """
-    
     # Store shared state, Borg pattern
     __shared_state = {}
     
@@ -55,7 +53,7 @@ class Config(DictMixin):
         
         if not self.config_file or not os.path.exists(self.config_file):
             raise ConfigError("please provide name or config_file")
-
+        
         self.config = {}
         self.load(self.config_file)
 
@@ -69,7 +67,10 @@ class Config(DictMixin):
             path to config file
         """
         with open(path) as f:
-            self.config = load(f)
+            self.config = full_load(f)
+            if self.config is None:
+                sys.stderr.write("Warning: config file is empty!\n")
+                self.config = {}
 
     def save(self):
         """ 
