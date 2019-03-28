@@ -13,9 +13,7 @@ class Config(DictMixin):
     """ Configuration class. 
 
     State will be shared across config objects. 
-
     """
-    
     # Store shared state, Borg pattern
     __shared_state = {}
     
@@ -55,7 +53,7 @@ class Config(DictMixin):
         
         if not self.config_file or not os.path.exists(self.config_file):
             raise ConfigError("please provide name or config_file")
-
+        
         self.config = {}
         self.load(self.config_file)
 
@@ -70,6 +68,9 @@ class Config(DictMixin):
         """
         with open(path) as f:
             self.config = load(f)
+            if self.config is None:
+                sys.stderr.write("Warning: config file is empty!\n")
+                self.config = {}
 
     def save(self):
         """ 
