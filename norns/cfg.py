@@ -1,4 +1,5 @@
 import os
+import sys
 from appdirs import user_config_dir
 from yaml import full_load, dump
 try:
