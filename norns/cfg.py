@@ -94,5 +94,8 @@ class Config(DictMixin):
     def __iter__(self):
         return self.config.__iter__()
     
+    def __str__(self):
+        return '{' + ', '.join(': '.join([str(key), str(value)]) for key, value in self.items()) + '}'
+
     def keys(self):
         return self.config.keys()
