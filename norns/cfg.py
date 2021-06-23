@@ -4,7 +4,7 @@ from yaml import full_load, dump
 try:
     from UserDict import DictMixin
 except ImportError:
-    from collections import MutableMapping as DictMixin
+    from collections.abc import MutableMapping as DictMixin
 import pkg_resources
 
 from norns.exceptions import ConfigError
