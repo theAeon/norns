@@ -5,7 +5,7 @@ try:
     from UserDict import DictMixin
 except ImportError:
     from collections.abc import MutableMapping as DictMixin
-import pkg_resources
+import importlib.resources
 
 from norns.exceptions import ConfigError
 
@@ -49,8 +49,9 @@ class Config(DictMixin):
         
         if default and (not self.config_file or 
                 not os.path.exists(self.config_file)):
-            self.config_file = pkg_resources.resource_filename(name, default)
-        
+            self.config_file = importlib.resources.files(name) /  default
+            #self.config_file = importlib.resources.as_file(config_traversable) 
+       
         if not self.config_file or not os.path.exists(self.config_file):
             raise ConfigError("please provide name or config_file")
         
