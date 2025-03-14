@@ -28,7 +28,7 @@ package_data = {
 }
 
 requires = [
-    'nose',
+    'pynose',
     'appdirs',
     'pyyaml',
 ]
